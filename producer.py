@@ -1,12 +1,12 @@
 from kafka import KafkaProducer
 
 class Producer:
-    def __init__(self, bootstrap_server: list, security_protocol: str, sasl_mechanism: str, username: str,password: str, topic: str):
-        self.bootstrap_server = bootstrap_server
-        self.security_protocol = security_protocol
-        self.sasl_mechanism = sasl_mechanism
-        self.username = username
-        self.password = password
+    def __init__(self, config):
+        self.bootstrap_server = config['bootstrap_server']
+        self.security_protocol = config['security_protocol']
+        self.sasl_mechanism = config['sasl_mechanism']
+        self.username = config['username']
+        self.password = config['password']
         self.producer = None
     def init_producer(self):
         self.producer = KafkaProducer(
@@ -22,14 +22,16 @@ class Producer:
             self.init_producer()
         self.producer.send(topic, value= value, key= key)
 def main():
-    bootstrap_server = ["localhost:9094", "localhost:9194", "localhost:9294"]
-    topic = "my_topic"
-    security_protocol = "SASL_PLAINTEXT"
-    sasl_mechanism = "PLAIN"
-    username = "admin"
-    password = "Unigap@2024"
-    producer = Producer(bootstrap_server, security_protocol, sasl_mechanism, username, password, topic)
-    producer.push(topic, 'Hello')
+    config = {
+        "bootstrap_server": ["localhost:9094", "localhost:9194", "localhost:9294"],
+        "security_protocol": "SASL_PLAINTEXT",
+        "sasl_mechanism": "PLAIN",
+        "username": "admin",
+        "password": "Unigap@2024",
+        "topic": "my_topic",
+    }
+    producer = Producer(config)
+    producer.push(config['topic'], 'Hello')
 
 if __name__ == "__main__":
     main()
