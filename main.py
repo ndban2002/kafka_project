@@ -28,7 +28,7 @@ def main():
     consumer = Consumer(consumer_config)
 
     # Store consumer data to MongoDB
-    # consumer.read_to_mongodb()
+    consumer.read_to_mongodb()
 
     # Store consumer data to my Kafka's topic
     data = consumer.read()
