@@ -1,5 +1,6 @@
 from producer import Producer
 from consumer import Consumer
+import configparser
 
 def main():
     consumer_config = {
@@ -24,8 +25,10 @@ def main():
         "topic": "kafka_project_topic",
     }
 
-    producer = Producer(producer_config)
-    consumer = Consumer(consumer_config)
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    producer = Producer(config['producer'])
+    consumer = Consumer(config['consumer'])
 
     # Store consumer data to MongoDB
     consumer.read_to_mongodb()
