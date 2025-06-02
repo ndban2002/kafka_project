@@ -1,5 +1,3 @@
-from dbm import error
-
 from kafka import KafkaConsumer
 from pymongo import MongoClient, errors
 import json
@@ -50,27 +48,3 @@ class Consumer:
                     print(f"Successfully storage {count} message to MongoDB")
             except Exception as err:
                 raise err
-
-
-def main():
-    config = {
-        "bootstrap_server": ["113.160.15.232:9094", "113.160.15.232:9194", "113.160.15.232:9294"],
-        "security_protocol": "SASL_PLAINTEXT",
-        "sasl_mechanism": "PLAIN",
-        "username": "kafka",
-        "password": "UnigapKafka@2024",
-        "topic": "product_view",
-        "consumer_group": "binhan-group",
-        "mongodb_uri": "localhost:27017",
-        "mongodb_db": "kafka_project",
-        "mongodb_collection": "streaming_data"
-    }
-
-    consumer = Consumer(config)
-    data = consumer.read()
-    for i, v in enumerate(data):
-        print(v)
-        if i > 5:
-            break
-if __name__ == "__main__":
-    main()

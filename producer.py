@@ -21,17 +21,3 @@ class Producer:
         if self.producer is None:
             self.init_producer()
         self.producer.send(topic, value= value, key= key)
-def main():
-    config = {
-        "bootstrap_server": ["localhost:9094", "localhost:9194", "localhost:9294"],
-        "security_protocol": "SASL_PLAINTEXT",
-        "sasl_mechanism": "PLAIN",
-        "username": "admin",
-        "password": "Unigap@2024",
-        "topic": "my_topic",
-    }
-    producer = Producer(config)
-    producer.push(config['topic'], 'Hello')
-
-if __name__ == "__main__":
-    main()
